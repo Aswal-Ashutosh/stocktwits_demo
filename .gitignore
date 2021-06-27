@@ -1,3 +1,6 @@
+.vscode
+environment_variable.dart
+
 # Miscellaneous
 *.class
 *.log
