@@ -11,7 +11,7 @@ class StocktwitsAuthDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      insetPadding: EdgeInsets.symmetric(horizontal: 10),
+      insetPadding: EdgeInsets.symmetric(horizontal: kDefualtDialogHorizontalPadding),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(kDefualtBorderRadius)),
       elevation: kDefualtDialogElevation,
