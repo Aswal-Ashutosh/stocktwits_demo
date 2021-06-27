@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class StocktwitsAuthDialog extends StatelessWidget {
-  final String? initialUrl;
+  final String initialUrl;
 
-  StocktwitsAuthDialog({this.initialUrl});
+  StocktwitsAuthDialog({required this.initialUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +21,8 @@ class StocktwitsAuthDialog extends StatelessWidget {
 }
 
 class CustomDialog extends StatefulWidget {
-  final String? initialUrl;
-  CustomDialog({this.initialUrl});
+  final String initialUrl;
+  CustomDialog({required this.initialUrl});
   @override
   _CustomDialogState createState() => _CustomDialogState();
 }
@@ -31,14 +31,13 @@ class _CustomDialogState extends State<CustomDialog> {
   bool isLoading = true;
   @override
   Widget build(BuildContext context) {
-    final deviceSize = MediaQuery.of(context).size;
     return ClipRRect(
       borderRadius: BorderRadius.circular(kDefualtBorderRadius),
       child: Stack(
         alignment: Alignment.center,
         children: [
           Container(
-            height: deviceSize.height / 2.0,
+            height: MediaQuery.of(context).size.height / 2.0,
             child: WebView(
               initialUrl: widget.initialUrl,
               navigationDelegate: (NavigationRequest request) {
