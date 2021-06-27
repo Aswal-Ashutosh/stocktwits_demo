@@ -11,7 +11,8 @@ class StocktwitsAuthDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      insetPadding: EdgeInsets.symmetric(horizontal: kDefualtDialogHorizontalPadding),
+      insetPadding:
+          EdgeInsets.symmetric(horizontal: kDefualtDialogHorizontalPadding),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(kDefualtBorderRadius)),
       elevation: kDefualtDialogElevation,
@@ -43,9 +44,8 @@ class _CustomDialogState extends State<CustomDialog> {
               navigationDelegate: (NavigationRequest request) {
                 final requestUrl = request.url;
                 if (requestUrl.startsWith(SITE_DOMAIN)) {
-                  final tokenExchangeCode = requestUrl.substring(
-                      requestUrl.indexOf('=') +
-                          1); //Extracting acess token from redirection url.
+                  //Extracting acess token from redirection url.
+                  final tokenExchangeCode = requestUrl.substring(requestUrl.indexOf('=') + 1);
                   Navigator.of(context).pop(tokenExchangeCode);
                 }
                 return NavigationDecision.navigate;
@@ -55,9 +55,15 @@ class _CustomDialogState extends State<CustomDialog> {
                   isLoading = false;
                 });
               },
+              onWebViewCreated: (webViewController) {
+                webViewController.clearCache();
+                CookieManager().clearCookies();
+              },
             ),
           ),
-          isLoading ? CircularProgressIndicator() : Container(width: 0, height: 0)
+          isLoading
+              ? CircularProgressIndicator()
+              : Container(width: 0, height: 0)
         ],
       ),
     );

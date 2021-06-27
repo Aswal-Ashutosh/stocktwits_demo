@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:demo/custom/user_about_dialog.dart';
 import 'package:demo/custom/watch_list_card.dart';
+import 'package:demo/screens/auth_screen.dart';
 import 'package:demo/service/shared_pref_handler.dart';
 import 'package:demo/service/user.dart';
 import 'package:flutter/material.dart';
@@ -56,20 +57,32 @@ class _WatchListScreenState extends State<WatchListScreen> {
           child: Icon(Icons.person),
           onTap: () {
             showDialog(
-              context: context,
-              builder: (context) => UserAboutDialog(userId: user?.userId??'', userName: user?.userName??'')
-            );
+                context: context,
+                builder: (context) => UserAboutDialog(
+                    userId: user?.userId ?? '',
+                    userName: user?.userName ?? ''));
           },
         ),
         title: Text('WatchList'),
         centerTitle: true,
-        actions: [Icon(Icons.logout)],
+        actions: [
+          GestureDetector(
+            child: Icon(Icons.logout),
+            onTap: () async{
+              await SharedPrefHandler.delete(); // Deleting current logged in user data
+              Navigator.of(context).popAndPushNamed(AuthScreen.id);
+            },
+          ),
+        ],
       ),
       body: SafeArea(
-          child: isLoading ? Center(child: CircularProgressIndicator()) :  ListView.builder(
-        itemBuilder: (_, index) => WatchListCard(data: watchlist[index]),
-        itemCount: watchlist.length,
-      )),
+          child: isLoading
+              ? Center(child: CircularProgressIndicator())
+              : ListView.builder(
+                  itemBuilder: (_, index) =>
+                      WatchListCard(data: watchlist[index]),
+                  itemCount: watchlist.length,
+                )),
     );
   }
 }
