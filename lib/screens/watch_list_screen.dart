@@ -13,7 +13,7 @@ class WatchListScreen extends StatefulWidget {
 }
 
 class _WatchListScreenState extends State<WatchListScreen> {
-  bool loading = true;
+  bool isLoading = true;
   User? user;
   List<Map<String, String>> watchlist = [];
   @override
@@ -44,7 +44,7 @@ class _WatchListScreenState extends State<WatchListScreen> {
       });
     }
     setState(() {
-      loading = false;
+      isLoading = false;
     });
   }
 
@@ -66,7 +66,7 @@ class _WatchListScreenState extends State<WatchListScreen> {
         actions: [Icon(Icons.logout)],
       ),
       body: SafeArea(
-          child: ListView.builder(
+          child: isLoading ? Center(child: CircularProgressIndicator()) :  ListView.builder(
         itemBuilder: (_, index) => WatchListCard(data: watchlist[index]),
         itemCount: watchlist.length,
       )),
