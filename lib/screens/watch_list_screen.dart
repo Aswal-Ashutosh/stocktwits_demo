@@ -44,6 +44,7 @@ class _WatchListScreenState extends State<WatchListScreen> {
         'updated_at': data['updated_at'].toString()
       });
     }
+
     setState(() {
       isLoading = false;
     });
@@ -57,10 +58,12 @@ class _WatchListScreenState extends State<WatchListScreen> {
           child: Icon(Icons.person),
           onTap: () {
             showDialog(
-                context: context,
-                builder: (context) => UserAboutDialog(
-                    userId: user?.userId ?? '',
-                    userName: user?.userName ?? ''));
+              context: context,
+              builder: (context) => UserAboutDialog(
+                userId: user?.userId ?? '',
+                userName: user?.userName ?? '',
+              ),
+            );
           },
         ),
         title: Text('WatchList'),
@@ -68,21 +71,23 @@ class _WatchListScreenState extends State<WatchListScreen> {
         actions: [
           GestureDetector(
             child: Icon(Icons.logout),
-            onTap: () async{
-              await SharedPrefHandler.delete(); // Deleting current logged in user data
+            onTap: () async {
+              await SharedPrefHandler
+                  .delete(); // Deleting current logged in user data
               Navigator.of(context).popAndPushNamed(AuthScreen.id);
             },
           ),
         ],
       ),
       body: SafeArea(
-          child: isLoading
-              ? Center(child: CircularProgressIndicator())
-              : ListView.builder(
-                  itemBuilder: (_, index) =>
-                      WatchListCard(data: watchlist[index]),
-                  itemCount: watchlist.length,
-                )),
+        child: isLoading
+            ? Center(child: CircularProgressIndicator())
+            : ListView.builder(
+                itemBuilder: (_, index) =>
+                    WatchListCard(data: watchlist[index], user: user),
+                itemCount: watchlist.length,
+              ),
+      ),
     );
   }
 }
